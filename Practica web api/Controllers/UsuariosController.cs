@@ -9,11 +9,11 @@ namespace Practica_web_api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductosController : ControllerBase
+    public class UsuariosController : ControllerBase
     {
         private readonly UsuarioRepository _repo;
 
-        public ProductosController(UsuarioRepository repo)
+        public UsuariosController(UsuarioRepository repo)
         {
             _repo = repo;
         }
@@ -29,33 +29,33 @@ namespace Practica_web_api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> ObtenerPorId(int id)
         {
-            var producto = await _repo.BuscarPorIdAsync(id);
+            var usuario = await _repo.BuscarPorIdAsync(id);
 
-            if (producto == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            return Ok(producto);
+            return Ok(usuario);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Agregar([FromBody] Usuario dto)
         {
-            var producto = new Usuario
+            var usuario = new Usuario
             {
                 Nombre = dto.Nombre,
                 Email = dto.Email,
                 Contra = dto.Contra
             };
 
-            await _repo.AgregarAsync(producto);
+            await _repo.AgregarAsync(usuario);
 
             return CreatedAtAction(
                 nameof(ObtenerPorId),
-                new { id = producto.Id },
-                producto
+                new { id = usuario.Id },
+                usuario
             );
         }
 
@@ -64,7 +64,7 @@ namespace Practica_web_api.Controllers
             int id,
             [FromBody] Usuario dto)
         {
-            var producto = new Usuario
+            var usuario = new Usuario
             {
                 Id = id,
                 Nombre = dto.Nombre,
@@ -72,7 +72,7 @@ namespace Practica_web_api.Controllers
                 Contra = dto.Contra
             };
 
-            bool actualizado = await _repo.ActualizarAsync(producto);
+            bool actualizado = await _repo.ActualizarAsync(usuario);
 
             if (!actualizado)
             {

@@ -42,11 +42,6 @@ namespace Practica_web_api.Repositories
 
      }*/
 
-
-
-
-
-
     public class UsuarioRepository
     {
         private readonly UsuarioDbContext _context;
@@ -70,27 +65,27 @@ namespace Practica_web_api.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<Usuario> AgregarAsync(Usuario producto)
+        public async Task<Usuario> AgregarAsync(Usuario usu)
         {
-            _context.Usuarios.Add(producto);
+            _context.Usuarios.Add(usu);
 
             await _context.SaveChangesAsync();
 
-            return producto;
+            return usu;
         }
 
-        public async Task<bool> ActualizarAsync(Usuario producto)
+        public async Task<bool> ActualizarAsync(Usuario usu)
         {
-            var existente = await _context.Usuarios.FindAsync(producto.Id);
+            var existente = await _context.Usuarios.FindAsync(usu.Id);
 
             if (existente == null)
             {
                 return false;
             }
 
-            existente.Nombre = producto.Nombre;
-            existente.Email = producto.Email;
-            existente.Contra = producto.Contra;
+            existente.Nombre = usu.Nombre;
+            existente.Email = usu.Email;
+            existente.Contra = usu.Contra;
 
             await _context.SaveChangesAsync();
 

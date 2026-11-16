@@ -21,7 +21,7 @@ builder.Services.AddDbContext<UsuarioDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<UsuarioRepository>(); //Usa el mismo objeto el cual creaste cuando alguien hace una petición
+builder.Services.AddScoped<UsuarioRepository>(); //Usa el mismo objeto el cual creaste cuando alguien hace una petición
 
 // Autenticación: "los usuarios se identifican con un JWT"
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
